@@ -7,24 +7,18 @@ namespace EstoqueSabadin
 {
     class Program
     {
-        private static CategoriaAplicacao _categoriaAplicacao = new CategoriaAplicacao();
+        private static CategoriaAplicacao _categoriaAplicacao = new();
 
         public Program(CategoriaAplicacao categoriaAplicacao)
         {
             _categoriaAplicacao = categoriaAplicacao;
         }
 
-        
-        static void Main(string[] args)
-        {
-            while (true)
-            {
-                MenuPrincipal();
-            }
-        }
 
-        private static void Atualizar()
+        private static void AtualizarCategoria()
         {
+            Console.Clear();
+            _categoriaAplicacao.ExibirListaCategorias();
             Console.Write("Digite o ID que deseja atualizar =>");
             int id = int.Parse(Console.ReadLine());
             Console.Write("Digite o novo nome =>");
@@ -33,10 +27,10 @@ namespace EstoqueSabadin
             int situacao = int.Parse(Console.ReadLine());
             var situacaoEnum = ValidarSituacao(situacao);
 
-            _categoriaAplicacao.Editar(new Modelos.CategoriaModelo { Nome = nome, Situacao = situacaoEnum }, id );
+            _categoriaAplicacao.Editar(nome, situacaoEnum, id);
         }
 
-        private static void Cadastrar()
+        private static void CadastrarCategoria()
         {
             Console.Write("ID:");
             int id = int.Parse(Console.ReadLine());
@@ -46,18 +40,22 @@ namespace EstoqueSabadin
             int situacao = int.Parse(Console.ReadLine());
             var situacaoEnum = ValidarSituacao(situacao);
 
-            _categoriaAplicacao.Cadastrar(id, nome, situacaoEnum);
+            _categoriaAplicacao.Cadastrar(nome, situacaoEnum);
         }
 
         private static SituacaoEnum ValidarSituacao(int situacao)
         {
-            if (situacao == 2)
+            if (situacao == 0)
+            {
+                return SituacaoEnum.Desativado;
+            }
+            if (situacao == 1)
             {
                 return SituacaoEnum.Desativado;
             }
             else
             {
-                return SituacaoEnum.Ativo;
+                throw new Exception("Opção de situação é invalida.");
             }
         }
 
@@ -70,13 +68,13 @@ namespace EstoqueSabadin
             {
                 case 1:
                     Console.Clear();
-                    Cadastrar();
+                    CadastrarCategoria();
                     Console.ReadKey();
                     break;
 
                 case 2:
                     Console.Clear();
-                    Atualizar();
+                    AtualizarCategoria();
                     Console.ReadKey();
                     break;
 
@@ -95,7 +93,31 @@ namespace EstoqueSabadin
 
         private static void MenuProduto()
         {
+            Console.Clear();
+            Console.Write("1 - Cadastrar \n2 - Atualizar \n3 - Listar categorias \nSua opcão -->");
+            int opcao = int.Parse(Console.ReadLine());
+            switch (opcao)
+            {
+                case 1:
+                    Console.Clear();
+                    Console.ReadKey();
+                    break;
 
+                case 2:
+                    Console.Clear();
+                    Console.ReadKey();
+                    break;
+
+                case 3:
+                    Console.Clear();
+                    Console.ReadKey();
+                    break;
+
+                default:
+                    Console.WriteLine("Opcao invalida, tente novamente");
+                    Console.ReadKey();
+                    break;
+            }
         }
 
         private static void MenuPrincipal()
@@ -112,11 +134,19 @@ namespace EstoqueSabadin
                 case 2:
                     MenuCategoria();
                     break;
-                
+
                 default:
                     Console.WriteLine("Opcao invalida, tente novamente");
                     Console.ReadKey();
                     break;
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                MenuPrincipal();
             }
         }
     }

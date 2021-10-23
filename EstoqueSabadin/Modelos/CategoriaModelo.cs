@@ -9,8 +9,23 @@ namespace EstoqueSabadin.Modelos
 {
     public class CategoriaModelo
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public SituacaoEnum Situacao { get; set; }
+        public int Id { get; private set; }
+        public string Nome { get; private set; }
+        public SituacaoEnum Situacao { get; private set; }
+
+        public CategoriaModelo(string nome, SituacaoEnum situacao)
+        {
+            Id = Id++;
+            Nome = nome;
+            Situacao = situacao;
+        }
+
+        public void Atualizar(string nome, SituacaoEnum situacao)
+        {
+            Nome = nome;
+            Situacao = situacao;
+
+            Console.WriteLine("Atializado com suesso.");
+        }
     }
 }

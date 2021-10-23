@@ -18,14 +18,9 @@ namespace EstoqueSabadin.Aplicacao
         {
         }
 
-        public void Cadastrar(int id, string nome, SituacaoEnum situacao)
+        public void Cadastrar(string nome, SituacaoEnum situacao)
         {
-            _categoriaModelo.Add(new CategoriaModelo
-            {
-                Id = id,
-                Nome = nome,
-                Situacao = situacao
-            });
+            _categoriaModelo.Add(new CategoriaModelo(nome, situacao));
         }
 
         public void Excluir(int id)
@@ -45,14 +40,13 @@ namespace EstoqueSabadin.Aplicacao
             }
         }
 
-        public void Editar(CategoriaModelo categoriaModelo, int id)
+        public void Editar(string nome, SituacaoEnum situacao, int id)
         {
             var categoria = BuscarCategoriaPorId(id);
-            if(categoria != null)
-            {
-                categoria.Nome = categoriaModelo.Nome;
-                categoria.Situacao = categoriaModelo.Situacao;
-            }
+            Console.WriteLine(categoria.ToString());
+
+            if (categoria != null)
+                categoria.Atualizar(nome, situacao);
         }
 
         public List<CategoriaModelo> ObterCategorias()
@@ -62,11 +56,11 @@ namespace EstoqueSabadin.Aplicacao
 
         public void ExibirListaCategorias()
         {
-            if(_categoriaModelo.Count > 0)
+            if (_categoriaModelo.Count > 0)
             {
                 for (var i = 0; i < _categoriaModelo.Count; i++)
                 {
-                    Console.WriteLine($"Categoria {i+1}\nID: {_categoriaModelo[i].Id}, " +
+                    Console.WriteLine($"Categoria {i + 1}\nID: {_categoriaModelo[i].Id}, " +
                         $"Nome da categoria: {_categoriaModelo[i].Nome}, " +
                         $"Situacão: {_categoriaModelo[i].Situacao}\n");
                 }
@@ -76,6 +70,6 @@ namespace EstoqueSabadin.Aplicacao
                 Console.WriteLine("Não há categorias cadastradas.");
             }
         }
-        
+
     }
 }

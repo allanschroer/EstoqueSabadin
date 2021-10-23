@@ -1,8 +1,8 @@
 ﻿namespace EstoqueSabadin.Enum
 {
-    public enum SituacaoEnum
+    public enum SituacaoEnum : byte
     {
-        Ativo = 1,
-        Desativado = 2
+        Ativo = 0,
+        Desativado = 1
     }
 }
