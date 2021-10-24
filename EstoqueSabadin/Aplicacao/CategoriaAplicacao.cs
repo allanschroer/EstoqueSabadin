@@ -54,6 +54,14 @@ namespace EstoqueSabadin.Aplicacao
             return _categoriaModelo;
         }
 
+        public bool ExisteAlgumaCategoria()
+        {
+            if (_categoriaModelo.Count > 0)
+                return true;
+
+            return false;
+        }
+
         public void ExibirListaCategorias()
         {
             if (_categoriaModelo.Count > 0)
